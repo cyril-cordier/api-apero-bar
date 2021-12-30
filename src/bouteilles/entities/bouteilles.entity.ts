@@ -48,7 +48,7 @@ export class Bouteilles {
 
   @Column({ nullable: true })
   @ApiProperty()
-  alcohol: number;
+  alcohol: string;
 
   @Column({ nullable: true })
   @ApiProperty()

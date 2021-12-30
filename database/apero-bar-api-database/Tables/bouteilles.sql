@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[bouteilles]
     [image] NVARCHAR(50),
     [countryId] INT NOT NULL,
     [volume] NVARCHAR(50) NOT NULL,
-    [alcohol] NUMERIC,
+    [alcohol] NVARCHAR(50) NOT NULL,
     [quantity] INT NOT NULL,
     [display] BOOLEAN NOT NULL,
     [toBuy] BOOLEAN NOT NULL,
