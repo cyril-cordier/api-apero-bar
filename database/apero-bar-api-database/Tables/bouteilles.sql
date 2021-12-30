@@ -4,7 +4,7 @@ CREATE TABLE [dbo].[bouteilles]
     [categoryId] INT NOT NULL,
     [typeId] INT NOT NULL,
     [name] NVARCHAR(50) NOT NULL,
-    [vintage] INT,
+    [vintage] NVARCHAR(50),
     [details] NVARCHAR(50),
     [image] NVARCHAR(50),
     [countryId] INT NOT NULL,

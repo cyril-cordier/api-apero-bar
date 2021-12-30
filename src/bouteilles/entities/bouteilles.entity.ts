@@ -28,7 +28,7 @@ export class Bouteilles {
 
   @Column({ nullable: true })
   @ApiProperty()
-  vintage: number;
+  vintage: string;
  
   @Column({ nullable: true })
   @ApiProperty()
