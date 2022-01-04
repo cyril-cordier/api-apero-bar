@@ -5,6 +5,19 @@ import {
   AuthenticationStrategy,
 } from './auth.strategy';
 const jwt_decode = require('jwt-decode');
+import * as jwt from 'jsonwebtoken';
+import { JWT_SIGN_SECRET } from "src/sso/jwt.utils";
+
+interface JwToken {
+  'allowed-origins': string[];
+  role: string;
+  rights: boolean;
+  name: string;
+  username: string;
+  userID: number;
+  app: string;
+  exp: number;
+}
 
 export class AuthenticationError extends Error {}
 
@@ -20,11 +33,11 @@ export class AuthenticationService {
   async authenticate(accessToken: string) {
 
     try {
-      
-      const jwt = jwt_decode(accessToken)
+      jwt.verify(accessToken, process.env.JWT_SECRET)
+      const jwtoken:JwToken = jwt_decode(accessToken)
       const now = new Date().getTime()/1000
       
-      if (now < jwt.exp && jwt.rights && jwt.app === process.env.APP && (jwt.role == "admin" || jwt.role == "user")) {
+      if (now < jwtoken.exp && jwtoken.rights && jwtoken.app === process.env.APP && (jwtoken.role == "admin" || jwtoken.role == "user")) {
         return true;
       } else {
         throw new Error();
@@ -38,11 +51,12 @@ export class AuthenticationService {
   async authenticateAdmin(accessToken: string) {
 
     try {
-      
-      const jwt = jwt_decode(accessToken)
+      jwt.verify(accessToken, process.env.JWT_SECRET)
+      const jwtoken:JwToken = jwt_decode(accessToken)
+
       const now = new Date().getTime()/1000
 
-      if (now < jwt.exp && jwt.rights && jwt.role == "admin" && jwt.app === process.env.APP) {
+      if (now < jwtoken.exp && jwtoken.rights && jwtoken.role == "admin" && jwtoken.app === process.env.APP) {
         return true;
       } else {
         throw new Error();

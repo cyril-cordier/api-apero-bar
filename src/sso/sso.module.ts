@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv';
 import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -6,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { JWT_SIGN_SECRET } from './jwt.utils'
 import { SsoController } from './sso.controller'
 import { SsoService } from './sso.service'
+import { resolve } from 'path';
+dotenv.config({ path: resolve(__dirname, '../../.env') });
+
 
 
 @Module({
@@ -14,7 +18,7 @@ import { SsoService } from './sso.service'
     //PassportModule,
     // RedirectionModule,
     JwtModule.register({
-      secret: JWT_SIGN_SECRET,
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '8760h' },
     }),
     TypeOrmModule.forFeature([])
